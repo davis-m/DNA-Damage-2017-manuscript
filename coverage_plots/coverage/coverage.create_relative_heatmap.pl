@@ -207,7 +207,7 @@ for my $sampleID (keys %{$description_ref}){
 
    if (${$description_ref}{$sampleID}{"bam_2"} eq "-"){
       die "Require a bamCoverage options file to be specified for single bam analysis (--bigwig-coverage-options)\n" if length($bigwig_coverage_options)==0;
-      my $bigwig_call = "bamCoverage -b=$inBAM --outFileName=$bigwigOut $bam_cov_options --outFileFormat=bigwig";
+      my $bigwig_call = "bamCoverage -b $inBAM --outFileName $bigwigOut $bam_cov_options --outFileFormat bigwig";
       print STDERR "\nBigWig conversion:\n$bigwig_call\n";
       die "BigWig conversion failed\n" if &pipesystem($bigwig_call);
       die "Can't find conversion call output: $bigwigOut\n" if (! -s $bigwigOut);
@@ -215,7 +215,7 @@ for my $sampleID (keys %{$description_ref}){
       die "Require a bamCompare options file to be specified for input vs. control analysis (--bigwig-compare-options)\n" if length($bigwig_compare_options)==0;
       my $inBAM2 = "$inDir/".${$description_ref}{$sampleID}{"bam_2"};
       die "$inBAM2 can't be found\n" if (! -s $inBAM2);
-      my $bigwig_call = "bamCompare -b1=$inBAM -b2=$inBAM2 --outFileName=$bigwigOut $bam_comp_options --outFileFormat=bigwig";
+      my $bigwig_call = "bamCompare -b1 $inBAM -b2 $inBAM2 --outFileName $bigwigOut $bam_comp_options --outFileFormat bigwig";
       print STDERR "\nBigWig conversion:\n$bigwig_call\n";
       die "BigWig conversion failed\n" if &pipesystem($bigwig_call);
       die "Can't find conversion call output: $bigwigOut\n" if (! -s $bigwigOut);
@@ -265,15 +265,18 @@ for my $annot (keys %{$regions_ref}){
       die "$countmatrix already exists\n" if (-e $countmatrix);   
       my $R_parsable_counts = "$outDir/".$sample_choice.".$annot.count_matrix.Rparse.tab";
       die "$R_parsable_counts already exists\n" if (-e $R_parsable_counts);   
+      my $output_region_order = "$outDir/".$sample_choice.".$annot.region_order.bed";
+      die "$output_region_order already exists\n" if (-e $output_region_order);   
    
       # Compute matrix
-      my $computeMatrix_call = "computeMatrix  reference-point  --scoreFileName=$bigwig_record{$sample_choice} --outFileName=$countmatrix --outFileNameMatrix=$R_parsable_counts --regionsFileName=$regions_file --sortRegions=no --missingDataAsZero $count_matrix_options";
+      my $computeMatrix_call = "computeMatrix  reference-point  --scoreFileName $bigwig_record{$sample_choice} --outFileName $countmatrix --outFileNameMatrix $R_parsable_counts --outFileSortedRegions $output_region_order --regionsFileName $regions_file --sortRegions no --missingDataAsZero $count_matrix_options";
       
       # NOTE: Now sorted by Tom's script 080716
       
       print STDERR "\nCreating count matrix for $sample_choice:\n$computeMatrix_call\n";
       die "Could not create the countMatrix:\n" if &pipesystem($computeMatrix_call);
       die "Could not find the count matrix file for R: $R_parsable_counts\n" if (! -s $R_parsable_counts);
+      die "Could not find the file containing the region order: $output_region_order\n" if (! -s $output_region_order);
    
       $label_record = "$label_record\t$sample_choice";
       $matrix_record = "$matrix_record\t$R_parsable_counts";
