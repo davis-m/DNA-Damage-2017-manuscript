@@ -68,6 +68,7 @@ for(i in rownames(site_set_stats)){
    }
    # Take the mean value of the regions flanking the centre of the AsiSI site
    flanking_window_means[[i]] <- apply(site_table[[i]][,c(2000,2001)],1,mean)
+   #flanking_window_means[[i]] <- apply(site_table[[i]][,c(1991,2010)],1,mean)
 }
 
 differences <- list()

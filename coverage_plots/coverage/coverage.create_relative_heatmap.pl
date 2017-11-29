@@ -269,7 +269,7 @@ for my $annot (keys %{$regions_ref}){
       die "$output_region_order already exists\n" if (-e $output_region_order);   
    
       # Compute matrix
-      my $computeMatrix_call = "computeMatrix  reference-point  --scoreFileName $bigwig_record{$sample_choice} --outFileName $countmatrix --outFileNameMatrix $R_parsable_counts --outFileSortedRegions $output_region_order --regionsFileName $regions_file --sortRegions no --missingDataAsZero $count_matrix_options";
+      my $computeMatrix_call = "computeMatrix  reference-point  --scoreFileName $bigwig_record{$sample_choice} --outFileName $countmatrix --outFileNameMatrix $R_parsable_counts --outFileSortedRegions $output_region_order --regionsFileName $regions_file --sortRegions keep --missingDataAsZero $count_matrix_options";
       
       # NOTE: Now sorted by Tom's script 080716
       
