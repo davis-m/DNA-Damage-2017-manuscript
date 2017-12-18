@@ -79,7 +79,7 @@ do
       dest=$OPTARG              # This should be the complete path to the destination directory.
       ;;
     b)
-      bamdir=$OPTARG            # This should be the directory containing the individual folders for each aligned sample.
+      bamdir=$OPTARG            # This should be the directory containing each aligned sample.
       ;;
     q)
       qual=$OPTARG              # The quality cutoff score

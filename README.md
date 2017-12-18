@@ -38,12 +38,6 @@ produced by deeptools from bigWig files and generates multiple heatmaps and
 profiles in a single plot. Please see tleonardi on GitHub for the full
 repository.
 
-dtCompare.specific_edit_for_multiplot.R
-This version of the code has been specifically edited to plot multiple promoter
-sets to the same panel. This is at the expense of the normal functionality.
-Users who intend to use the code for future projects should refer to
-dtCompare.R and tleonardi on GitHub.
-
 rename_standard_tally_output.pl
 This script will take a FASTQ file from the standard SequenceImp output. It
 will then replace the read IDs.  This will ensure IDs in paired files match
