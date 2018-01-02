@@ -23,9 +23,8 @@
 # The script will take a BED file, find overlaps with BED file annotations in a
 # strand independent manner and then split to multiple output files depending
 # upon underlying annotations. Output files will be redundant.
+# Environment variable SRNA_PATH must be set.
 
-# TO DO:
-# Make strand specificity optional
 
 library("GenomicRanges")
 library("tools")

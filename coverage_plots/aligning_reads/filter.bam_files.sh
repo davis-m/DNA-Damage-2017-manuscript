@@ -103,8 +103,8 @@ do
 -q quality score cutoff (must be greater than 0)
 -r flag to specify whether picard tools should be used to remove duplicate alignments
 -m the memory to be passed to java (-Xmx) for picard tools when removing duplicate alignments
--t bit-flag integer value to be passed to samtools view -f option
--k bit-flag integer value to be passed to samtools view -k option
+-t bit-flag integer value to be passed to samtools view -F option
+-k bit-flag integer value to be passed to samtools view -f option
 EOU
       exit
       ;;

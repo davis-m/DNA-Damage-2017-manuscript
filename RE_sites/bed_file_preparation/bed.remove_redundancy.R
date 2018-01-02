@@ -25,6 +25,7 @@ library("GenomicRanges")
 # This script will take a set of comma separated BED files ordered according to hierarchy.
 # Redundancy will be removed from each in order. A set of labels of the same length as the input files
 # will be used to write the non-redundant spans to file. 
+# SRNA_PATH environment variable should be set so that the x.general_R_functions.R script can be located.
 
 env_path <- Sys.getenv(x="SRNA_PATH")
 source(paste(env_path,"/tools/x.general_R_functions.R",sep=""))
@@ -46,7 +47,7 @@ if(!is.null(args$beds)){
 if(!is.null(args$labels)){
     labels <- check_argument(args,"labels","character")
 }else{
-   stop("Require a set of labels the same length as the initial BED files")
+   stop("Require a set of labels the same length as the initial BED files. These should also be comma seperated.")
 }
 
 if(!is.null(args$chrlens)){

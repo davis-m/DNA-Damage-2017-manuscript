@@ -23,14 +23,15 @@
 ############################################################################
 
 # This script coordinates the conversion of sam files to bam files
+# SRNA_PATH must be set
 
 use strict;
 use warnings;
 
 use Getopt::Long;
 
-my $samDir = "";
-my $outDir = "";
+my $samDir = "";  # Directory containing the SAM files
+my $outDir = "";  # Directory for the outputs
 my $conversionScript = "$ENV{SRNA_PATH}/aligning_reads/sub.sam_to_bam_streamlined.pl";
 
 if(! GetOptions(

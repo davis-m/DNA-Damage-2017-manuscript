@@ -38,6 +38,8 @@ chrLenFile = "human_1.chrom_len.tab"
 outDir = "Active_AsiSI_site_sets/"
 
 # Subroutines
+
+# Write a GR object to a BED file
 writeGRtoBED <- function(outFile=c(),theGR=GRanges()){
    if(length(outFile)==0){
       stop("writeGRtoBED: require an 'outFile'")
@@ -81,6 +83,7 @@ read_bed <-function(bed_file){
    return(bed_read)
 }
 
+# Take a BED file read as a table and convert it to a GR object
 BEDtoGR_V3 <- function(BEDRData,lengthFun,stranded=FALSE,classif="raddish",element_names=c(),convert=FALSE){
    if(missing(BEDRData)){stop("BEDtoGR: requires BED data")}
    if(missing(lengthFun)){stop("BEDtoGR: requires chromosome length data")}
@@ -136,12 +139,14 @@ BEDtoGR_V3 <- function(BEDRData,lengthFun,stranded=FALSE,classif="raddish",eleme
    return(propGR)
 }
 
+# Read a 2 column table of chromosome sizes
 read_Ensembl_ChrLen <- function(chrLenFile=""){
    if (nchar(chrLenFile)==0){stop("No chromosome length file passesd")}
    chromLengthTab <- read.table(chrLenFile, sep="\t", as.is=TRUE, header = TRUE,colClasses = c("character", "integer"))
    return(chromLengthTab)
 }
 
+# Convert the chromosome sizes to a vector
 organiseChrLen <- function(chrTable){
    if(!is.data.frame(chrTable)){stop("No chromosome length table specified")}
    chrTable <- chrTable[order(chrTable[,1]),]
@@ -152,6 +157,7 @@ organiseChrLen <- function(chrTable){
 
 # Convert UCSC identifiers into Ensembl IDs
 # chrNames - a vector of chromosome identifiers
+# This is a crude approach and should be improved to capture supercontigs and patches
 seqnameConverter <- function(chrNames){
    newSequences <- sub("^chr","",chrNames,ignore.case=TRUE,perl=TRUE)
    newSequences <- sub("^M$","MT",newSequences,ignore.case=TRUE,perl=TRUE)
@@ -245,8 +251,6 @@ dev.off()
 # CHECKED
 
 
-
-# Check from here
 active_promoter_sites_GR <- allAsiSIGR[targetted_sites_per_feature[["promoter"]]]
 other_promoter_sites_GR <- allAsiSIGR[sites_per_feature[["promoter"]][!sites_per_feature[["promoter"]] %in% targetted_sites_per_feature[["promoter"]]]] 
 genic_active_sites_GR <- allAsiSIGR[rownames(paired_sites[! rownames(paired_sites) %in% targetted_sites_per_feature[["intergenic"]],])]

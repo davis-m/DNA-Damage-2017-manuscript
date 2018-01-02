@@ -41,7 +41,7 @@ if (! GetOptions(
    "basebed=s"       =>    \$baseBED,
    "featuresbed=s"   =>    \$featuresBED,
    "outname=s"    =>    \$basename,
-   "merge"        =>    \$mergeit
+   "merge"        =>    \$mergeit            # Merging ouput is optional
 )){
    die "Could not parse the command line options\n";
 }

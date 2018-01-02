@@ -25,6 +25,7 @@
 # This script will take a set of FASTQ files and run
 # Bowtie2 to align each to a genome. Alignments are performed on a
 # server farm.
+# SRNA_PATH must be set as an environment variable.
 
 use strict;
 use warnings;
@@ -50,17 +51,17 @@ my $tallyit=0;
 my $tally_by_pos=0;
 
 if (! GetOptions(
-    "dataDir=s"        => \$dataDir,
-    "outDir=s"         => \$outDir,
-    "logDir=s"         => \$logDir,
-    "bowtie2-genome=s" => \$genome_base,
-    "bowtie2-opts=s"   => \$bow2opts,
-    "description=s"    => \$desc,
-    "min-len=i"        => \$minlen,
-    "tally"            => \$tallyit,
-    "tally-opts=s"     => \$tallyopts,
+    "dataDir=s"        => \$dataDir,      # Directory containing the read files
+    "outDir=s"         => \$outDir,       # Directory for the output
+    "logDir=s"         => \$logDir,       # Directory to store the bowtie logs
+    "bowtie2-genome=s" => \$genome_base,  # Index for the alignments
+    "bowtie2-opts=s"   => \$bow2opts,     # Options to be passed to Bowtie2
+    "description=s"    => \$desc,         # A file containing 3 columns: sample name, file1 and file2
+    "min-len=i"        => \$minlen,       # A length filter applied at tally step
+    "tally"            => \$tallyit,      # Run tally on the FASTQ files
+    "tally-opts=s"     => \$tallyopts,    # Tally options file: required if files are to be tallied
     "threads=i"        => \$threads,
-    "tally_pos"        => \$tally_by_pos,
+    "tally_pos"        => \$tally_by_pos, # Paired reads to be paired by position by tally.
     "ROM=i"            => \$ROM,
     "RAM=i"            => \$RAM
  )){
